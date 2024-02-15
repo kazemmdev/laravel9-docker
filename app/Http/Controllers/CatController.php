@@ -23,7 +23,7 @@ class CatController extends Controller
      {
          $this->catService = $catService;
      }
-     
+     //test init
     
     public function index()
     {
