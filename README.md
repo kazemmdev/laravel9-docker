@@ -1,3 +1,4 @@
+#SETUP
 - Run `composer require laravel/sanctum`
 - Run `composer update`
 - Generate your application encryption key using `php artisan key:generate`.
