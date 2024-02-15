@@ -3,6 +3,7 @@
     <form method="POST" action="{{ route('token-create') }}">
         @csrf
         <input type="hidden" value="" name="token_name" id="token">
+        <input type="hidden" value="30" name="expires_at" id="token">
         <input type="text" name="name" placeholder="username">
         <input type="password" name="password" placeholder="password">
         <script>

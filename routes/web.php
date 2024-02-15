@@ -30,20 +30,13 @@ Route::post('/tokens/create', function (Request $request) {
         $username = $request->input('name');
         $password = $request->input('password');
         $tokenName = $request->input('token_name');
+        $expires_at = $request->input('expires_at');
     
-        // Find the user by username or create a new one if not found
-        // $user = User::find(['name' => $username]);
-
-        // $user = User::firstOrCreate(
-        //     ['name' => $username],
-        //     ['password' => Hash::make($request->input('password'))]
-        // );
-
-        // if (!$user){
             $user = User::create(
                 [
                     'name'       => $username,
-                    'password' =>  Hash::make($request->input('password'))
+                    'password' =>  Hash::make($request->input('password')),
+                    'expires_at' => $expires_at,
                 ]
                 );
         // }
@@ -57,7 +50,7 @@ Route::post('/tokens/create', function (Request $request) {
     $token = $user->createToken($tokenName)->plainTextToken;
 
     // Return the generated token as a JSON response
-    return response()->json(['token' => $token]);
+    return redirect()->route('cats.index');
 })->name('token-create');
 
 
