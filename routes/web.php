@@ -27,19 +27,28 @@ Route::get('testform', function () {
 
 Route::post('/tokens/create', function (Request $request) {
         // Extract request parameters
-        $username = $request->input('username');
+        $username = $request->input('name');
         $password = $request->input('password');
         $tokenName = $request->input('token_name');
     
         // Find the user by username or create a new one if not found
-        $user = User::firstOrCreate(['name' => $username]);
-    
-        // Set the user's password if it's not already set
-        if (!$user->password) {
-            $user->password = Hash::make($password);
-            $user->save();
-        }
-    
+        // $user = User::find(['name' => $username]);
+
+        // $user = User::firstOrCreate(
+        //     ['name' => $username],
+        //     ['password' => Hash::make($request->input('password'))]
+        // );
+
+        // if (!$user){
+            $user = User::create(
+                [
+                    'name'       => $username,
+                    'password' =>  Hash::make($request->input('password'))
+                ]
+                );
+        // }
+
+        $user->save();
 
     // Authenticate the user
     Auth::login($user);

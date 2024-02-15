@@ -15,6 +15,8 @@ use App\Http\Controllers\CatController;
 */
 
 
+Route::middleware('auth:sanctum')->post('/cats/{catId}/vote', 'CatController@vote');
+
 
 Route::middleware('auth:sanctum')->group(function () {
     // Define protected routes here

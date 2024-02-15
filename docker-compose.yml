@@ -18,7 +18,19 @@ services:
       - .docker/nginx:/etc/nginx/conf.d
     networks:
       app-network:
-
+### Mysql container
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    volumes:
+      - /var/lib/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test_pass
+      MYSQL_ROOT_HOST: '%'  # needs to be enclosed with quotes
   backend:
     build:
       context: .docker/php
@@ -29,3 +41,4 @@ services:
       - .docker/php/php.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       app-network:
+
