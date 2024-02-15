@@ -31,7 +31,7 @@ Route::post('/tokens/create', function (Request $request) {
         $password = $request->input('password');
         $tokenName = $request->input('token_name');
         $expires_at = $request->input('expires_at');
-    
+    // make a user with the model
             $user = User::create(
                 [
                     'name'       => $username,
@@ -40,7 +40,7 @@ Route::post('/tokens/create', function (Request $request) {
                 ]
                 );
         // }
-
+                // save him into db
         $user->save();
 
     // Authenticate the user
@@ -54,7 +54,7 @@ Route::post('/tokens/create', function (Request $request) {
 })->name('token-create');
 
 
-
+//protected route
 Route::middleware('auth:sanctum')->resource('cats', CatController::class);
-
+//protected route
 Route::middleware('auth:sanctum')->post('/cats/vote', [CatController::class, 'vote'])->name('catvote');

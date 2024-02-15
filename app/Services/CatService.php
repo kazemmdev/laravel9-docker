@@ -7,7 +7,6 @@ class CatService
 {
     public function fetchCatInformation()
     {
-        // Your service logic here
          //this is to get a random cat. 
          $response = Http::withHeaders([
             'X-API-Key' => 'live_4RwXzcioeTpNp7iDQhlgEsnmIVApLsrlNPWjfaV2iEyyRZJMzTOgYD9JXaGilwpH',
@@ -23,7 +22,6 @@ class CatService
     }
     public function fetchSpecificCatInformation($catId)
     {
-        // Your service logic here
         //this is to get a random cat. 
         $response = Http::withHeaders([
             'X-API-Key' => 'live_4RwXzcioeTpNp7iDQhlgEsnmIVApLsrlNPWjfaV2iEyyRZJMzTOgYD9JXaGilwpH',
@@ -59,7 +57,6 @@ class CatService
             
             public function fetchVoteInformation()
             {
-                // Your service logic here
                  //this is to get recent votes
                  $response = Http::withHeaders([
                     'X-API-Key' => 'live_4RwXzcioeTpNp7iDQhlgEsnmIVApLsrlNPWjfaV2iEyyRZJMzTOgYD9JXaGilwpH',
