@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Services\CatService;
 
+use Illuminate\Support\Facades\Auth;
+
 
 class CatController extends Controller
 {
@@ -25,12 +27,10 @@ class CatController extends Controller
     
     public function index()
     {
-        //
+
         // Fetch cat information using the CatService
         $cats = $this->catService->fetchCatInformation();
-
-        // Return the fetched cat information to the view
-        return view('components.cats', ['cats' => $cats]);
+       return view('components.cats', ['cats' => $cats]);
 
     }
 
