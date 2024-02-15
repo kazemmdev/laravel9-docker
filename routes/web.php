@@ -54,5 +54,7 @@ Route::post('/tokens/create', function (Request $request) {
 })->name('token-create');
 
 
+
 Route::middleware('auth:sanctum')->resource('cats', CatController::class);
 
+Route::middleware('auth:sanctum')->post('/cats/vote', [CatController::class, 'vote'])->name('catvote');

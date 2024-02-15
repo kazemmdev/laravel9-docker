@@ -17,53 +17,54 @@ class CatController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     protected $catService;
+    protected $catService;
 
-     public function __construct(CatService $catService)
-     {
-         $this->catService = $catService;
-     }
-     //test init
-    
+    public function __construct(CatService $catService)
+    {
+        $this->catService = $catService;
+    }
+
     public function index()
     {
 
         // Fetch cat information using the CatService
         $cats = $this->catService->fetchCatInformation();
-       return view('components.cats', ['cats' => $cats]);
-
+        $votes = $this->catService->fetchVoteInformation();
+        [$cat_obj] = $cats;
+        return view('components.cats', ['cats' => $cat_obj, 'votes' => $votes]);
     }
 
 
-    public function vote(Request $request, $catId){
+    public function vote(Request $request)
+    {
         // Validate the request data (e.g., check if vote data is present)
-        $request->validate([
-            'vote' => 'required',
-        ]);
 
-        // Get the vote data from the request
+
+        // Get the  data from the request
         $vote = $request->input('vote');
+        $catId = $request->input('image_id');
 
         // Example: Send vote to Cat API
-        $response = Http::post("https://api.thecatapi.com/v1/votes", [
-            'image_id' => $catId,
-            'value' => $vote == 'upvote' ? 1 : -1, // Convert 'upvote' to 1, 'downvote' to 0
-        ]);
+        $votes = $this->catService->sendVoteInformation($catId, $vote);
 
         // Check if the vote was successfully submitted to the Cat API
-        if ($response->successful()) {
+        if ($votes) {
             // Store voting information in the cache for 30 minutes
             Cache::put('cat_votes_' . $catId, $vote, now()->addMinutes(30));
 
             // Return success response
-            return response()->json(['message' => 'Vote recorded successfully']);
+            $cats =  $cats = $this->catService->fetchSpecificCatInformation($catId);
+            $votes = $this->catService->fetchVoteInformation();
+
+          return view('components.cats', ['cats' => $cats, 'votes' => $votes]);
+
         } else {
             // Return error response
-            return response()->json(['error' => 'Failed to record vote'], $response->status());
+            return redirect()->route('index');
         }
     }
 
-    
+
 
     /**
      * Show the form for creating a new resource.
