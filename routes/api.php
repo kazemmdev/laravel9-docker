@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CatController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    // Define protected routes here
+    Route::post('/cats/{cat}/vote', [CatController::class, 'vote']);
 });
+
+
